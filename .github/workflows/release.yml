@@ -55,15 +55,15 @@ jobs:
       contents: write
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@master
         with:
           name: linux
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@master
         with:
           name: macos
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@master
         with:
           name: windows
       - name: Create Release
