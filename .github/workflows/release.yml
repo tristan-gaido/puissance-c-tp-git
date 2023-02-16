@@ -35,18 +35,18 @@ jobs:
           name: puissance-macos
           path: ./puissance-macos
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Build
-        run: gcc puissance.c -o puissance-windows.exe
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: puissance-windows
-          path: ./puissance-windows.exe
+#  build-windows:
+#    runs-on: windows-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Build
+#        run: gcc puissance.c -o puissance-windows.exe
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: puissance-windows
+#          path: ./puissance-windows.exe
 
   create-release:
     needs: [build-linux, build-macos, build-windows]
@@ -55,17 +55,17 @@ jobs:
       contents: write
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v2
         with:
-          name: linux
+          name: release1
       - name: Download artifacts
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v2
         with:
-          name: macos
-      - name: Download artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: windows
+          name: release2
+#      - name: Download artifacts
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: release3
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -75,6 +75,6 @@ jobs:
           files: |
             puissance-linux.bin
             puissance-macos
-            puissance-windows.exe
+#            puissance-windows.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
