@@ -48,42 +48,33 @@ jobs:
           name: puissance-windows
           path: ./puissance-windows.exe
 
-  release:
+  create-release:
     needs: [build-linux, build-macos, build-windows]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Download Artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: puissance-linux
-      - name: Download Artifacts
+          name: linux
+      - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: puissance-macos
-      - name: Download Artifacts
+          name: macos
+      - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: puissance-windows
+          name: windows
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          name: Release ${{ github.ref }}
+          files: |
+            puissance-linux.bin
+            puissance-macos
+            puissance-windows.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          release_name: Release ${{ env.TAG_NAME }}
-          body: |
-            Changes in this release:
-            * Fix some bugs
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./puissance-linux.bin
-          asset_name: puissance-linux.bin
-          asset_content_type: application/octet-stream
