@@ -49,7 +49,7 @@ jobs:
 #          path: ./puissance-windows.exe
 
   create-release:
-    needs: [build-linux, build-macos, build-windows]
+    needs: [build-linux, build-macos]
     runs-on: ubuntu-latest
     permissions:
       contents: write
