@@ -57,11 +57,11 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: release1
+          name: puissance-linux
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: release2
+          name: puissance-macos
 #      - name: Download artifacts
 #        uses: actions/download-artifact@v2
 #        with:
